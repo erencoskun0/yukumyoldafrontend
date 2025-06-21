@@ -10,6 +10,7 @@ import {
   Users,
   Eye,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -53,12 +54,16 @@ export default function Home() {
                 className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
                 Nasıl Çalışır
               </a>
-              <button className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors">
+              <Link
+                href="/giris-yap"
+                className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors">
                 Giriş Yap
-              </button>
-              <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300">
+              </Link>
+              <Link
+                href="/kayit-ol"
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300">
                 Kayıt Ol
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -105,7 +110,8 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="space-y-3 pt-16">
-              <button
+              <Link
+                href="/giris-yap"
                 className="w-full p-4 bg-white/70 hover:bg-blue-50 rounded-xl transition-all duration-300 text-left flex items-center justify-between group"
                 onClick={closeMobileMenu}>
                 <div>
@@ -113,9 +119,10 @@ export default function Home() {
                   <div className="text-sm text-gray-600">Hesabınıza erişin</div>
                 </div>
                 <Users className="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform duration-300" />
-              </button>
+              </Link>
 
-              <button
+              <Link
+                href="/kayit-ol"
                 className="w-full p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300"
                 onClick={closeMobileMenu}>
                 <div className="text-center">
@@ -124,7 +131,7 @@ export default function Home() {
                     Hemen başla • Gizli ücret yok
                   </div>
                 </div>
-              </button>
+              </Link>
 
               <button
                 className="w-full p-4 bg-white/70 hover:bg-gray-50 rounded-xl transition-all duration-300 text-left flex items-center justify-between group border-2 border-dashed border-gray-300"

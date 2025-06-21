@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import {
-  Truck,
   MapPin,
   Clock,
   Mail,
@@ -15,120 +14,125 @@ import {
   Filter,
   Search,
   Eye,
+  User,
+  ChevronLeft,
+  Plus,
 } from "lucide-react";
 
-const YuklerPage = () => {
+export default function KullaniciYukleri({
+  params,
+}: {
+  params: { id: string };
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [departureFilter, setDepartureFilter] = useState("all");
   const [destinationFilter, setDestinationFilter] = useState("all");
 
-  // Fake JSON data - 6 yük
-  const yukler = [
+  // Mock kullanıcı bilgisi
+  const kullanici = {
+    Id: parseInt(params.id),
+    Name: "Ahmet",
+    Surname: "Yılmaz",
+    Email: "ahmet.yilmaz@email.com",
+    PhoneNumber: "+90 532 123 45 67",
+  };
+
+  // Mock data - Bu kullanıcının yükleri
+  const kullaniciYukleri = [
     {
       Id: 1,
-      Name: "Ahmet",
-      Surname: "Yılmaz",
-      Email: "ahmet.yilmaz@email.com",
-      PhoneNumber: "+90 532 123 45 67",
+      Name: kullanici.Name,
+      Surname: kullanici.Surname,
+      Email: kullanici.Email,
+      PhoneNumber: kullanici.PhoneNumber,
       Description:
         "İstanbul'dan Ankara'ya mobilya taşıma işi. Dikkatli taşınması gereken eşyalar var.",
+      VehicleType: "Kamyon",
       LoadStatus: "Aktif",
-      CreatedDate: "2024-01-15",
-      LoadTime: "2024-01-20 09:00",
+      CreatedDate: "2024-01-15T00:00:00Z",
+      LoadTime: "2024-01-20T09:00:00Z",
       Departurev: "İstanbul",
       DestinationProvince: "Ankara",
       Weight: "2.5 Ton",
       Length: "4.2 m",
     },
     {
-      Id: 2,
-      Name: "Fatma",
-      Surname: "Demir",
-      Email: "fatma.demir@email.com",
-      PhoneNumber: "+90 541 987 65 43",
+      Id: 7,
+      Name: kullanici.Name,
+      Surname: kullanici.Surname,
+      Email: kullanici.Email,
+      PhoneNumber: kullanici.PhoneNumber,
       Description:
-        "Bursa'dan İzmir'e elektronik eşya sevkiyatı. Kırılabilir ürünler mevcut.",
+        "Ankara'dan İzmir'e elektronik eşya sevkiyatı. Kırılabilir ürünler mevcut.",
+      VehicleType: "Kamyonet",
       LoadStatus: "Beklemede",
-      CreatedDate: "2024-01-16",
-      LoadTime: "2024-01-22 14:30",
-      Departurev: "Bursa",
+      CreatedDate: "2024-01-18T00:00:00Z",
+      LoadTime: "2024-01-25T14:30:00Z",
+      Departurev: "Ankara",
       DestinationProvince: "İzmir",
       Weight: "1.8 Ton",
       Length: "3.5 m",
     },
     {
-      Id: 3,
-      Name: "Mehmet",
-      Surname: "Kaya",
-      Email: "mehmet.kaya@email.com",
-      PhoneNumber: "+90 555 246 80 13",
+      Id: 12,
+      Name: kullanici.Name,
+      Surname: kullanici.Surname,
+      Email: kullanici.Email,
+      PhoneNumber: kullanici.PhoneNumber,
       Description:
-        "Adana'dan Mersin'e tarım ürünleri nakliyesi. Soğuk zincir gerekli.",
+        "İstanbul'dan Bursa'ya inşaat malzemesi taşıma. Ağır yük dikkat.",
+      VehicleType: "Kamyon",
       LoadStatus: "Tamamlandı",
-      CreatedDate: "2024-01-10",
-      LoadTime: "2024-01-14 06:00",
-      Departurev: "Adana",
-      DestinationProvince: "Mersin",
-      Weight: "5.0 Ton",
+      CreatedDate: "2024-01-10T00:00:00Z",
+      LoadTime: "2024-01-14T08:00:00Z",
+      Departurev: "İstanbul",
+      DestinationProvince: "Bursa",
+      Weight: "5.2 Ton",
       Length: "6.0 m",
     },
     {
-      Id: 4,
-      Name: "Ayşe",
-      Surname: "Öztürk",
-      Email: "ayse.ozturk@email.com",
-      PhoneNumber: "+90 506 135 79 24",
+      Id: 18,
+      Name: kullanici.Name,
+      Surname: kullanici.Surname,
+      Email: kullanici.Email,
+      PhoneNumber: kullanici.PhoneNumber,
       Description:
-        "Trabzon'dan Samsun'a inşaat malzemesi taşıma. Ağır yük dikkat.",
-      LoadStatus: "Aktif",
-      CreatedDate: "2024-01-17",
-      LoadTime: "2024-01-25 08:00",
-      Departurev: "Trabzon",
-      DestinationProvince: "Samsun",
-      Weight: "8.2 Ton",
-      Length: "7.5 m",
-    },
-    {
-      Id: 5,
-      Name: "Can",
-      Surname: "Arslan",
-      Email: "can.arslan@email.com",
-      PhoneNumber: "+90 533 864 20 95",
-      Description:
-        "Antalya'dan Konya'ya tekstil ürünleri sevkiyatı. Paketli ürünler.",
-      LoadStatus: "Beklemede",
-      CreatedDate: "2024-01-18",
-      LoadTime: "2024-01-28 10:15",
-      Departurev: "Antalya",
+        "Ankara'dan Konya'ya tekstil ürünleri sevkiyatı. Paketli ürünler.",
+      VehicleType: "Kamyonet",
+      LoadStatus: "İptal",
+      CreatedDate: "2024-01-12T00:00:00Z",
+      LoadTime: "2024-01-19T10:15:00Z",
+      Departurev: "Ankara",
       DestinationProvince: "Konya",
       Weight: "3.1 Ton",
       Length: "4.8 m",
     },
     {
-      Id: 6,
-      Name: "Zeynep",
-      Surname: "Şahin",
-      Email: "zeynep.sahin@email.com",
-      PhoneNumber: "+90 542 753 96 18",
+      Id: 23,
+      Name: kullanici.Name,
+      Surname: kullanici.Surname,
+      Email: kullanici.Email,
+      PhoneNumber: kullanici.PhoneNumber,
       Description:
-        "Gaziantep'ten Şanlıurfa'ya gıda ürünleri nakliyesi. Hijyen koşulları önemli.",
-      LoadStatus: "İptal",
-      CreatedDate: "2024-01-12",
-      LoadTime: "2024-01-19 13:45",
-      Departurev: "Gaziantep",
-      DestinationProvince: "Şanlıurfa",
-      Weight: "2.9 Ton",
-      Length: "4.0 m",
+        "İstanbul'dan Adana'ya gıda ürünleri nakliyesi. Soğuk zincir gerekli.",
+      VehicleType: "Soğutuculu Kamyon",
+      LoadStatus: "Aktif",
+      CreatedDate: "2024-01-20T00:00:00Z",
+      LoadTime: "2024-01-28T06:00:00Z",
+      Departurev: "İstanbul",
+      DestinationProvince: "Adana",
+      Weight: "4.5 Ton",
+      Length: "5.5 m",
     },
   ];
 
   // Şehir listelerini otomatik oluştur
   const departureCities = [
-    ...new Set(yukler.map((yuk) => yuk.Departurev)),
+    ...new Set(kullaniciYukleri.map((yuk) => yuk.Departurev)),
   ].sort();
   const destinationCities = [
-    ...new Set(yukler.map((yuk) => yuk.DestinationProvince)),
+    ...new Set(kullaniciYukleri.map((yuk) => yuk.DestinationProvince)),
   ].sort();
 
   // Status badge renkleri
@@ -147,13 +151,24 @@ const YuklerPage = () => {
     }
   };
 
+  // Durum istatistikleri
+  const statusStats = {
+    total: kullaniciYukleri.length,
+    aktif: kullaniciYukleri.filter((y) => y.LoadStatus === "Aktif").length,
+    beklemede: kullaniciYukleri.filter((y) => y.LoadStatus === "Beklemede")
+      .length,
+    tamamlandi: kullaniciYukleri.filter((y) => y.LoadStatus === "Tamamlandı")
+      .length,
+    iptal: kullaniciYukleri.filter((y) => y.LoadStatus === "İptal").length,
+  };
+
   // Filtreleme
-  const filteredYukler = yukler.filter((yuk) => {
+  const filteredYukler = kullaniciYukleri.filter((yuk) => {
     const matchesSearch =
       searchTerm === "" ||
-      yuk.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      yuk.Surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      yuk.Description.toLowerCase().includes(searchTerm.toLowerCase());
+      yuk.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      yuk.Departurev.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      yuk.DestinationProvince.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesStatus =
       statusFilter === "all" || yuk.LoadStatus === statusFilter;
@@ -173,33 +188,91 @@ const YuklerPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
-      {/* Header */}
-      <div className="bg-white border-b border-blue-100 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-3">
-                <Truck className="h-8 w-8 text-white" />
+      <div className="container mx-auto px-4 py-8">
+        {/* Navigation */}
+        <div className="mb-6">
+          <Link
+            href="/yukler"
+            className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200">
+            <ChevronLeft className="h-5 w-5" />
+            <span className="font-medium">Tüm Yüklere Dön</span>
+          </Link>
+        </div>
+
+        {/* Header */}
+        <div className="bg-white border-b border-blue-100 rounded-2xl shadow-xl mb-8">
+          <div className="px-8 py-8">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-6 lg:space-y-0">
+              <div className="flex items-center space-x-4">
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-4">
+                  <User className="h-10 w-10 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {kullanici.Name} {kullanici.Surname}
+                  </h1>
+                  <p className="text-gray-600 text-lg">Kullanıcının Yükleri</p>
+                  <div className="flex items-center space-x-4 mt-2">
+                    <div className="flex items-center space-x-2 text-gray-600">
+                      <Phone className="h-4 w-4" />
+                      <span className="text-sm">{kullanici.PhoneNumber}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-600">
+                      <Mail className="h-4 w-4" />
+                      <span className="text-sm">{kullanici.Email}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Mevcut Yükler
-                </h1>
-                <p className="text-gray-600">Platformdaki aktif yük ilanları</p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                  <Plus className="h-5 w-5 mr-2" />
+                  Yeni Yük Ekle
+                </button>
+                <span className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
+                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                  ÜCRETSİZ Platform
+                </span>
               </div>
-            </div>
-            <div className="hidden sm:block">
-              <span className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                ÜCRETSİZ Platform
-              </span>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Filters */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* İstatistikler */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+            <div className="text-2xl font-bold text-gray-900 mb-1">
+              {statusStats.total}
+            </div>
+            <div className="text-sm text-gray-600">Toplam Yük</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+            <div className="text-2xl font-bold text-green-600 mb-1">
+              {statusStats.aktif}
+            </div>
+            <div className="text-sm text-gray-600">Aktif</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+            <div className="text-2xl font-bold text-orange-600 mb-1">
+              {statusStats.beklemede}
+            </div>
+            <div className="text-sm text-gray-600">Beklemede</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+            <div className="text-2xl font-bold text-blue-600 mb-1">
+              {statusStats.tamamlandi}
+            </div>
+            <div className="text-sm text-gray-600">Tamamlandı</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+            <div className="text-2xl font-bold text-red-600 mb-1">
+              {statusStats.iptal}
+            </div>
+            <div className="text-sm text-gray-600">İptal</div>
+          </div>
+        </div>
+
+        {/* Filters */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Search */}
@@ -210,7 +283,7 @@ const YuklerPage = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="İsim, açıklama ara..."
+                  placeholder="Açıklama, şehir ara..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
@@ -360,9 +433,9 @@ const YuklerPage = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900 text-lg">
-                        {yuk.Name} {yuk.Surname}
+                        Yük #{yuk.Id}
                       </h3>
-                      <p className="text-gray-600 text-sm">Yük ID: #{yuk.Id}</p>
+                      <p className="text-gray-600 text-sm">{yuk.VehicleType}</p>
                     </div>
                   </div>
                   <span
@@ -408,20 +481,6 @@ const YuklerPage = () => {
                   <div className="flex items-center space-x-2">
                     <Ruler className="h-4 w-4 text-gray-500" />
                     <span className="text-sm text-gray-700">{yuk.Length}</span>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">{yuk.Email}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Phone className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">
-                      {yuk.PhoneNumber}
-                    </span>
                   </div>
                 </div>
 
@@ -478,6 +537,8 @@ const YuklerPage = () => {
                 onClick={() => {
                   setSearchTerm("");
                   setStatusFilter("all");
+                  setDepartureFilter("all");
+                  setDestinationFilter("all");
                 }}
                 className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
                 Filtreleri Temizle
@@ -488,6 +549,4 @@ const YuklerPage = () => {
       </div>
     </div>
   );
-};
-
-export default YuklerPage;
+}

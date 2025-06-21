@@ -1,93 +1,90 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import {
   Truck,
   MapPin,
-  Clock,
   Mail,
   Phone,
-  Calendar,
-  Weight,
   Ruler,
-  Package,
   Filter,
   Search,
   Eye,
+  Car,
+  Layers,
 } from "lucide-react";
 
-const YuklerPage = () => {
+const AraclarPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [departureFilter, setDepartureFilter] = useState("all");
-  const [destinationFilter, setDestinationFilter] = useState("all");
+  const [provinceFilter, setProvinceFilter] = useState("all");
+  const [vehicleTypeFilter, setVehicleTypeFilter] = useState("all");
+  const [vehicleBodyFilter, setVehicleBodyFilter] = useState("all");
 
-  // Fake JSON data - 6 yük
-  const yukler = [
+  // Fake JSON data - 6 araç
+  const araclar = [
     {
       Id: 1,
-      Name: "Ahmet",
-      Surname: "Yılmaz",
-      Email: "ahmet.yilmaz@email.com",
-      PhoneNumber: "+90 532 123 45 67",
-      Description:
-        "İstanbul'dan Ankara'ya mobilya taşıma işi. Dikkatli taşınması gereken eşyalar var.",
-      LoadStatus: "Aktif",
-      CreatedDate: "2024-01-15",
-      LoadTime: "2024-01-20 09:00",
-      Departurev: "İstanbul",
-      DestinationProvince: "Ankara",
-      Weight: "2.5 Ton",
-      Length: "4.2 m",
-    },
-    {
-      Id: 2,
-      Name: "Fatma",
-      Surname: "Demir",
-      Email: "fatma.demir@email.com",
-      PhoneNumber: "+90 541 987 65 43",
-      Description:
-        "Bursa'dan İzmir'e elektronik eşya sevkiyatı. Kırılabilir ürünler mevcut.",
-      LoadStatus: "Beklemede",
-      CreatedDate: "2024-01-16",
-      LoadTime: "2024-01-22 14:30",
-      Departurev: "Bursa",
-      DestinationProvince: "İzmir",
-      Weight: "1.8 Ton",
-      Length: "3.5 m",
-    },
-    {
-      Id: 3,
       Name: "Mehmet",
       Surname: "Kaya",
       Email: "mehmet.kaya@email.com",
-      PhoneNumber: "+90 555 246 80 13",
+      PhoneNumber: "+90 532 123 45 67",
+      ProvinceName: "İstanbul",
+      Plate: "34 ABC 1234",
       Description:
-        "Adana'dan Mersin'e tarım ürünleri nakliyesi. Soğuk zincir gerekli.",
-      LoadStatus: "Tamamlandı",
-      CreatedDate: "2024-01-10",
-      LoadTime: "2024-01-14 06:00",
-      Departurev: "Adana",
-      DestinationProvince: "Mersin",
-      Weight: "5.0 Ton",
-      Length: "6.0 m",
+        "Güvenilir ve temiz araç. Uzun yol deneyimi mevcut. Sigortası tam kapsamlı.",
+      VehicleBodyName: "Tenteli",
+      VehicleTypeName: "Kamyon",
+      Height: "2.8 m",
+      Width: "2.4 m",
+      Length: "10.5 m",
+    },
+    {
+      Id: 2,
+      Name: "Ayşe",
+      Surname: "Demir",
+      Email: "ayse.demir@email.com",
+      PhoneNumber: "+90 541 987 65 43",
+      ProvinceName: "Ankara",
+      Plate: "06 XY 5678",
+      Description:
+        "Kırılabilir eşya taşımacılığında uzman. Özel ambalaj sistemi mevcut.",
+      VehicleBodyName: "Kapalı Kasa",
+      VehicleTypeName: "Kamyonet",
+      Height: "2.2 m",
+      Width: "2.0 m",
+      Length: "6.5 m",
+    },
+    {
+      Id: 3,
+      Name: "Ahmet",
+      Surname: "Yılmaz",
+      Email: "ahmet.yilmaz@email.com",
+      PhoneNumber: "+90 555 246 80 13",
+      ProvinceName: "İzmir",
+      Plate: "35 MN 9876",
+      Description:
+        "Soğuk zincir taşımacılığı yapıyorum. Gıda ürünleri için ideal araç.",
+      VehicleBodyName: "Soğutucu",
+      VehicleTypeName: "Kamyon",
+      Height: "3.0 m",
+      Width: "2.5 m",
+      Length: "12.0 m",
     },
     {
       Id: 4,
-      Name: "Ayşe",
+      Name: "Fatma",
       Surname: "Öztürk",
-      Email: "ayse.ozturk@email.com",
+      Email: "fatma.ozturk@email.com",
       PhoneNumber: "+90 506 135 79 24",
+      ProvinceName: "Bursa",
+      Plate: "16 KL 2468",
       Description:
-        "Trabzon'dan Samsun'a inşaat malzemesi taşıma. Ağır yük dikkat.",
-      LoadStatus: "Aktif",
-      CreatedDate: "2024-01-17",
-      LoadTime: "2024-01-25 08:00",
-      Departurev: "Trabzon",
-      DestinationProvince: "Samsun",
-      Weight: "8.2 Ton",
-      Length: "7.5 m",
+        "İnşaat malzemesi taşımacılığında 15 yıllık deneyim. Ağır yük taşıma uzmanı.",
+      VehicleBodyName: "Açık Kasa",
+      VehicleTypeName: "Tır",
+      Height: "4.0 m",
+      Width: "2.5 m",
+      Length: "16.5 m",
     },
     {
       Id: 5,
@@ -95,15 +92,15 @@ const YuklerPage = () => {
       Surname: "Arslan",
       Email: "can.arslan@email.com",
       PhoneNumber: "+90 533 864 20 95",
+      ProvinceName: "Antalya",
+      Plate: "07 PQ 1357",
       Description:
-        "Antalya'dan Konya'ya tekstil ürünleri sevkiyatı. Paketli ürünler.",
-      LoadStatus: "Beklemede",
-      CreatedDate: "2024-01-18",
-      LoadTime: "2024-01-28 10:15",
-      Departurev: "Antalya",
-      DestinationProvince: "Konya",
-      Weight: "3.1 Ton",
-      Length: "4.8 m",
+        "Şehir içi ve şehirlerarası taşımacılık. Hızlı ve güvenilir hizmet.",
+      VehicleBodyName: "Tenteli",
+      VehicleTypeName: "Kamyonet",
+      Height: "2.5 m",
+      Width: "2.2 m",
+      Length: "7.2 m",
     },
     {
       Id: 6,
@@ -111,63 +108,82 @@ const YuklerPage = () => {
       Surname: "Şahin",
       Email: "zeynep.sahin@email.com",
       PhoneNumber: "+90 542 753 96 18",
+      ProvinceName: "Trabzon",
+      Plate: "61 RS 8024",
       Description:
-        "Gaziantep'ten Şanlıurfa'ya gıda ürünleri nakliyesi. Hijyen koşulları önemli.",
-      LoadStatus: "İptal",
-      CreatedDate: "2024-01-12",
-      LoadTime: "2024-01-19 13:45",
-      Departurev: "Gaziantep",
-      DestinationProvince: "Şanlıurfa",
-      Weight: "2.9 Ton",
-      Length: "4.0 m",
+        "Karadeniz bölgesi taşımacılığında uzman. Dağlık arazilerde deneyimli.",
+      VehicleBodyName: "Kapalı Kasa",
+      VehicleTypeName: "Kamyon",
+      Height: "2.9 m",
+      Width: "2.4 m",
+      Length: "11.0 m",
     },
   ];
 
-  // Şehir listelerini otomatik oluştur
-  const departureCities = [
-    ...new Set(yukler.map((yuk) => yuk.Departurev)),
+  // Filtreleme için listeler oluştur
+  const provinces = [
+    ...new Set(araclar.map((arac) => arac.ProvinceName)),
   ].sort();
-  const destinationCities = [
-    ...new Set(yukler.map((yuk) => yuk.DestinationProvince)),
+  const vehicleTypes = [
+    ...new Set(araclar.map((arac) => arac.VehicleTypeName)),
+  ].sort();
+  const vehicleBodies = [
+    ...new Set(araclar.map((arac) => arac.VehicleBodyName)),
   ].sort();
 
-  // Status badge renkleri
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "Aktif":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "Beklemede":
-        return "bg-orange-100 text-orange-800 border-orange-200";
-      case "Tamamlandı":
+  // Türk plaka tasarımı komponenti
+  const TurkishPlate = ({ plate }: { plate: string }) => {
+    return (
+      <div className="inline-flex items-center bg-white border-2 border-blue-600 rounded-lg px-3 py-2 font-mono font-bold text-lg shadow-lg">
+        <div className="flex items-center space-x-1">
+          <span className="text-blue-600">TR</span>
+          <div className="w-px h-6 bg-blue-600 mx-2"></div>
+          <span className="text-gray-900 tracking-wider">{plate}</span>
+        </div>
+      </div>
+    );
+  };
+
+  // Araç tipi badge renkleri
+  const getVehicleTypeBadge = (type: string) => {
+    switch (type) {
+      case "Kamyon":
         return "bg-blue-100 text-blue-800 border-blue-200";
-      case "İptal":
-        return "bg-red-100 text-red-800 border-red-200";
+      case "Kamyonet":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "Tır":
+        return "bg-purple-100 text-purple-800 border-purple-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   // Filtreleme
-  const filteredYukler = yukler.filter((yuk) => {
+  const filteredAraclar = araclar.filter((arac) => {
     const matchesSearch =
       searchTerm === "" ||
-      yuk.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      yuk.Surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      yuk.Description.toLowerCase().includes(searchTerm.toLowerCase());
+      arac.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      arac.Surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      arac.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      arac.Plate.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus =
-      statusFilter === "all" || yuk.LoadStatus === statusFilter;
+    const matchesProvince =
+      provinceFilter === "all" ||
+      arac.ProvinceName.toLowerCase() === provinceFilter.toLowerCase();
 
-    const matchesDeparture =
-      departureFilter === "all" ||
-      yuk.Departurev.toLowerCase() === departureFilter.toLowerCase();
+    const matchesVehicleType =
+      vehicleTypeFilter === "all" ||
+      arac.VehicleTypeName.toLowerCase() === vehicleTypeFilter.toLowerCase();
 
-    const matchesDestination =
-      destinationFilter === "all" ||
-      yuk.DestinationProvince.toLowerCase() === destinationFilter.toLowerCase();
+    const matchesVehicleBody =
+      vehicleBodyFilter === "all" ||
+      arac.VehicleBodyName.toLowerCase() === vehicleBodyFilter.toLowerCase();
 
     return (
-      matchesSearch && matchesStatus && matchesDeparture && matchesDestination
+      matchesSearch &&
+      matchesProvince &&
+      matchesVehicleType &&
+      matchesVehicleBody
     );
   });
 
@@ -179,13 +195,13 @@ const YuklerPage = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-3">
-                <Truck className="h-8 w-8 text-white" />
+                <Car className="h-8 w-8 text-white" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Mevcut Yükler
+                  Mevcut Araçlar
                 </h1>
-                <p className="text-gray-600">Platformdaki aktif yük ilanları</p>
+                <p className="text-gray-600">Platformdaki nakliye araçları</p>
               </div>
             </div>
             <div className="hidden sm:block">
@@ -210,7 +226,7 @@ const YuklerPage = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="İsim, açıklama ara..."
+                  placeholder="Araç ara... (İsim, açıklama, plaka)"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
@@ -218,20 +234,20 @@ const YuklerPage = () => {
               </div>
             </div>
 
-            {/* Departure City Filter */}
+            {/* Province Filter */}
             <div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <MapPin className="h-5 w-5 text-gray-400" />
                 </div>
                 <select
-                  value={departureFilter}
-                  onChange={(e) => setDepartureFilter(e.target.value)}
+                  value={provinceFilter}
+                  onChange={(e) => setProvinceFilter(e.target.value)}
                   className="block w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 bg-white appearance-none cursor-pointer">
-                  <option value="all">Tüm Kalkış Şehirleri</option>
-                  {departureCities.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
+                  <option value="all">Tüm İller</option>
+                  {provinces.map((province) => (
+                    <option key={province} value={province}>
+                      {province}
                     </option>
                   ))}
                 </select>
@@ -250,20 +266,20 @@ const YuklerPage = () => {
               </div>
             </div>
 
-            {/* Destination City Filter */}
+            {/* Vehicle Type Filter */}
             <div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <MapPin className="h-5 w-5 text-gray-400" />
+                  <Truck className="h-5 w-5 text-gray-400" />
                 </div>
                 <select
-                  value={destinationFilter}
-                  onChange={(e) => setDestinationFilter(e.target.value)}
+                  value={vehicleTypeFilter}
+                  onChange={(e) => setVehicleTypeFilter(e.target.value)}
                   className="block w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 bg-white appearance-none cursor-pointer">
-                  <option value="all">Tüm Varış Şehirleri</option>
-                  {destinationCities.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
+                  <option value="all">Tüm Araç Tipleri</option>
+                  {vehicleTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
                     </option>
                   ))}
                 </select>
@@ -283,24 +299,25 @@ const YuklerPage = () => {
             </div>
           </div>
 
-          {/* Second Row - Status Filter and Clear Button */}
+          {/* Second Row - Vehicle Body Filter and Clear Button */}
           <div className="mt-4">
             <div className="flex flex-col sm:flex-row gap-4">
-              {/* Status Filter */}
+              {/* Vehicle Body Filter */}
               <div className="sm:w-48">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Filter className="h-5 w-5 text-gray-400" />
+                    <Layers className="h-5 w-5 text-gray-400" />
                   </div>
                   <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
+                    value={vehicleBodyFilter}
+                    onChange={(e) => setVehicleBodyFilter(e.target.value)}
                     className="block w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 bg-white appearance-none cursor-pointer">
-                    <option value="all">Tüm Durumlar</option>
-                    <option value="Aktif">Aktif</option>
-                    <option value="Beklemede">Beklemede</option>
-                    <option value="Tamamlandı">Tamamlandı</option>
-                    <option value="İptal">İptal</option>
+                    <option value="all">Tüm Gövde Tipleri</option>
+                    {vehicleBodies.map((body) => (
+                      <option key={body} value={body}>
+                        {body}
+                      </option>
+                    ))}
                   </select>
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <svg
@@ -322,9 +339,9 @@ const YuklerPage = () => {
                 <button
                   onClick={() => {
                     setSearchTerm("");
-                    setStatusFilter("all");
-                    setDepartureFilter("all");
-                    setDestinationFilter("all");
+                    setProvinceFilter("all");
+                    setVehicleTypeFilter("all");
+                    setVehicleBodyFilter("all");
                   }}
                   className="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center space-x-2">
                   <Filter className="h-4 w-4" />
@@ -339,55 +356,65 @@ const YuklerPage = () => {
         <div className="mb-6">
           <p className="text-gray-600">
             <span className="font-semibold text-blue-600">
-              {filteredYukler.length}
+              {filteredAraclar.length}
             </span>{" "}
-            yük bulundu
+            araç bulundu
           </p>
         </div>
 
-        {/* Yük Cards Grid */}
+        {/* Araç Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredYukler.map((yuk) => (
+          {filteredAraclar.map((arac) => (
             <div
-              key={yuk.Id}
+              key={arac.Id}
               className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden border border-gray-100">
               {/* Card Header */}
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 border-b border-gray-100">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-2">
-                      <Package className="h-5 w-5 text-white" />
+                      <Car className="h-5 w-5 text-white" />
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900 text-lg">
-                        {yuk.Name} {yuk.Surname}
+                        {arac.Name} {arac.Surname}
                       </h3>
-                      <p className="text-gray-600 text-sm">Yük ID: #{yuk.Id}</p>
+                      <p className="text-gray-600 text-sm flex items-center">
+                        <MapPin className="h-3 w-3 mr-1" />
+                        {arac.ProvinceName}
+                      </p>
                     </div>
                   </div>
                   <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStatusBadge(
-                      yuk.LoadStatus
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getVehicleTypeBadge(
+                      arac.VehicleTypeName
                     )}`}>
-                    {yuk.LoadStatus}
+                    {arac.VehicleTypeName}
                   </span>
+                </div>
+
+                {/* Turkish Plate */}
+                <div className="mt-4 flex justify-center">
+                  <TurkishPlate plate={arac.Plate} />
                 </div>
               </div>
 
               {/* Card Body */}
               <div className="p-6 space-y-4">
-                {/* Route */}
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="font-semibold text-gray-900">
-                        {yuk.Departurev}
-                      </span>
-                      <span className="text-gray-400">→</span>
-                      <span className="font-semibold text-gray-900">
-                        {yuk.DestinationProvince}
-                      </span>
+                {/* Vehicle Details */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 bg-gray-50 rounded-xl">
+                    <Layers className="h-5 w-5 text-gray-500 mx-auto mb-1" />
+                    <div className="text-xs text-gray-500">Gövde Tipi</div>
+                    <div className="font-semibold text-gray-900">
+                      {arac.VehicleBodyName}
+                    </div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-xl">
+                    <Truck className="h-5 w-5 text-gray-500 mx-auto mb-1" />
+                    <div className="text-xs text-gray-500">Araç Tipi</div>
+                    <div className="font-semibold text-gray-900">
+                      {arac.VehicleTypeName}
                     </div>
                   </div>
                 </div>
@@ -395,54 +422,51 @@ const YuklerPage = () => {
                 {/* Description */}
                 <div className="bg-gray-50 rounded-xl p-3">
                   <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
-                    {yuk.Description}
+                    {arac.Description}
                   </p>
                 </div>
 
-                {/* Load Details */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Weight className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">{yuk.Weight}</span>
+                {/* Dimensions */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="text-center">
+                    <div className="flex items-center justify-center space-x-1">
+                      <Ruler className="h-4 w-4 text-gray-500" />
+                      <span className="text-xs text-gray-500">Uzunluk</span>
+                    </div>
+                    <div className="font-semibold text-gray-900 text-sm">
+                      {arac.Length}
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Ruler className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">{yuk.Length}</span>
+                  <div className="text-center">
+                    <div className="flex items-center justify-center space-x-1">
+                      <Ruler className="h-4 w-4 text-gray-500" />
+                      <span className="text-xs text-gray-500">Genişlik</span>
+                    </div>
+                    <div className="font-semibold text-gray-900 text-sm">
+                      {arac.Width}
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="flex items-center justify-center space-x-1">
+                      <Ruler className="h-4 w-4 text-gray-500" />
+                      <span className="text-xs text-gray-500">Yükseklik</span>
+                    </div>
+                    <div className="font-semibold text-gray-900 text-sm">
+                      {arac.Height}
+                    </div>
                   </div>
                 </div>
 
                 {/* Contact Info */}
-                <div className="space-y-2">
+                <div className="space-y-2 pt-4 border-t border-gray-100">
                   <div className="flex items-center space-x-2">
                     <Mail className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">{yuk.Email}</span>
+                    <span className="text-sm text-gray-700">{arac.Email}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Phone className="h-4 w-4 text-gray-500" />
                     <span className="text-sm text-gray-700">
-                      {yuk.PhoneNumber}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Dates */}
-                <div className="grid grid-cols-1 gap-2 pt-4 border-t border-gray-100">
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="h-4 w-4 text-gray-500" />
-                    <span className="text-xs text-gray-600">
-                      Oluşturulma:{" "}
-                      {new Date(yuk.CreatedDate).toLocaleDateString("tr-TR")}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="h-4 w-4 text-gray-500" />
-                    <span className="text-xs text-gray-600">
-                      Yükleme:{" "}
-                      {new Date(yuk.LoadTime).toLocaleDateString("tr-TR")} -{" "}
-                      {new Date(yuk.LoadTime).toLocaleTimeString("tr-TR", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {arac.PhoneNumber}
                     </span>
                   </div>
                 </div>
@@ -450,34 +474,34 @@ const YuklerPage = () => {
 
               {/* Card Footer */}
               <div className="px-6 pb-6">
-                <Link
-                  href={`/yukler/${yuk.Id}`}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
+                <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
                   <Eye className="h-4 w-4" />
-                  <span>Detayları Görüntüle</span>
-                </Link>
+                  <span>Araç Detayları</span>
+                </button>
               </div>
             </div>
           ))}
         </div>
 
         {/* Empty State */}
-        {filteredYukler.length === 0 && (
+        {filteredAraclar.length === 0 && (
           <div className="text-center py-12">
             <div className="bg-white rounded-2xl shadow-lg p-12">
               <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
                 <Search className="h-12 w-12 text-gray-400" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Yük Bulunamadı
+                Araç Bulunamadı
               </h3>
               <p className="text-gray-600 mb-6">
-                Arama kriterlerinize uygun yük bulunamadı.
+                Arama kriterlerinize uygun araç bulunamadı.
               </p>
               <button
                 onClick={() => {
                   setSearchTerm("");
-                  setStatusFilter("all");
+                  setProvinceFilter("all");
+                  setVehicleTypeFilter("all");
+                  setVehicleBodyFilter("all");
                 }}
                 className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300">
                 Filtreleri Temizle
@@ -490,4 +514,4 @@ const YuklerPage = () => {
   );
 };
 
-export default YuklerPage;
+export default AraclarPage;
