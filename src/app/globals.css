@@ -24,3 +24,393 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ===============================================
+   🍞 TOAST TASARIMLARI - YÜKÜİM YOLDA STİLİ
+   Modern & Kullanıcı Odaklı Tasarım
+   =============================================== */
+
+/* Toast Container - Gelişmiş Responsive Positioning */
+.Toastify__toast-container {
+  @apply p-4;
+  width: 100%;
+  max-width: 450px;
+  /* Desktop için sağda kalacak şekilde pozisyonlama */
+  right: 2% !important;
+  left: auto !important;
+  top: 80px !important;
+  transform: none !important;
+}
+
+/* Mobil ve Tablet uyumluluk - Daha akıllı responsive */
+@media (max-width: 1024px) {
+  .Toastify__toast-container {
+    right: 3% !important;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Toastify__toast-container {
+    @apply p-3;
+    right: 4% !important;
+    left: 4% !important;
+    max-width: none !important;
+    width: calc(100% - 8%) !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .Toastify__toast-container {
+    right: 5% !important;
+    left: 5% !important;
+    width: calc(100% - 10%) !important;
+    top: 20px !important;
+  }
+}
+
+/* Ana Toast Container - Ultra Modern Tasarım */
+.Toastify__toast {
+  @apply rounded-3xl shadow-2xl border-0 p-0 overflow-hidden;
+  min-height: 80px;
+  background: transparent;
+  margin-bottom: 16px;
+  box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.08),
+    0 20px 40px -12px rgba(59, 130, 246, 0.06),
+    0 8px 16px -8px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+/* Toast glow effect için */
+.Toastify__toast::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  border-radius: 24px 24px 0 0;
+}
+
+/* Success Toast - Modern Yeşil Gradient */
+.Toastify__toast--success {
+  background: linear-gradient(
+      135deg,
+      rgba(220, 252, 231, 0.95) 0%,
+      rgba(187, 247, 208, 0.95) 50%,
+      rgba(134, 239, 172, 0.9) 100%
+    ),
+    linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  box-shadow: 0 32px 64px -12px rgba(34, 197, 94, 0.12),
+    0 20px 40px -12px rgba(22, 163, 74, 0.08);
+}
+
+.Toastify__toast--success .Toastify__toast-body {
+  @apply text-green-900;
+  font-weight: 600;
+}
+
+.Toastify__toast--success .Toastify__toast-icon {
+  color: #15803d;
+  filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.2));
+}
+
+/* Error Toast - Modern Kırmızı Gradient */
+.Toastify__toast--error {
+  background: linear-gradient(
+      135deg,
+      rgba(254, 242, 242, 0.95) 0%,
+      rgba(254, 202, 202, 0.95) 50%,
+      rgba(252, 165, 165, 0.9) 100%
+    ),
+    linear-gradient(135deg, #fef2f2, #fee2e2);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  box-shadow: 0 32px 64px -12px rgba(239, 68, 68, 0.12),
+    0 20px 40px -12px rgba(220, 38, 38, 0.08);
+}
+
+.Toastify__toast--error .Toastify__toast-body {
+  @apply text-red-900;
+  font-weight: 600;
+}
+
+.Toastify__toast--error .Toastify__toast-icon {
+  color: #dc2626;
+  filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.2));
+}
+
+/* Warning Toast - Modern Turuncu Gradient */
+.Toastify__toast--warning {
+  background: linear-gradient(
+      135deg,
+      rgba(255, 247, 237, 0.95) 0%,
+      rgba(255, 237, 213, 0.95) 50%,
+      rgba(254, 215, 170, 0.9) 100%
+    ),
+    linear-gradient(135deg, #fff7ed, #ffedd5);
+  border: 1px solid rgba(234, 88, 12, 0.15);
+  box-shadow: 0 32px 64px -12px rgba(234, 88, 12, 0.12),
+    0 20px 40px -12px rgba(194, 65, 12, 0.08);
+}
+
+.Toastify__toast--warning .Toastify__toast-body {
+  @apply text-orange-900;
+  font-weight: 600;
+}
+
+.Toastify__toast--warning .Toastify__toast-icon {
+  color: #c2410c;
+  filter: drop-shadow(0 2px 4px rgba(234, 88, 12, 0.2));
+}
+
+/* Info Toast - Marka Renkleri ile Modern Tasarım */
+.Toastify__toast--info {
+  background: linear-gradient(
+      135deg,
+      rgba(239, 246, 255, 0.95) 0%,
+      rgba(219, 234, 254, 0.95) 30%,
+      rgba(243, 232, 255, 0.95) 70%,
+      rgba(250, 245, 255, 0.9) 100%
+    ),
+    linear-gradient(135deg, #eff6ff, #f3e8ff);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  box-shadow: 0 32px 64px -12px rgba(37, 99, 235, 0.12),
+    0 20px 40px -12px rgba(147, 51, 234, 0.08);
+}
+
+.Toastify__toast--info .Toastify__toast-body {
+  @apply text-blue-900;
+  font-weight: 600;
+}
+
+.Toastify__toast--info .Toastify__toast-icon {
+  color: #1d4ed8;
+  filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));
+}
+
+/* Default Toast - Modern Gri Gradient */
+.Toastify__toast--default {
+  background: linear-gradient(
+      135deg,
+      rgba(249, 250, 251, 0.95) 0%,
+      rgba(243, 244, 246, 0.95) 50%,
+      rgba(229, 231, 235, 0.9) 100%
+    ),
+    linear-gradient(135deg, #f9fafb, #f3f4f6);
+  border: 1px solid rgba(156, 163, 175, 0.15);
+  box-shadow: 0 32px 64px -12px rgba(75, 85, 99, 0.08),
+    0 20px 40px -12px rgba(107, 114, 128, 0.06);
+}
+
+.Toastify__toast--default .Toastify__toast-body {
+  @apply text-gray-900;
+  font-weight: 600;
+}
+
+/* Toast Body - Gelişmiş Typography ve Spacing */
+.Toastify__toast-body {
+  @apply px-6 py-5 font-semibold text-base leading-relaxed;
+  margin: 0;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Toast İkon - Modern ve Büyük */
+.Toastify__toast-icon {
+  @apply w-7 h-7 flex-shrink-0;
+  margin: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* Kapatma Butonu - Ultra Modern */
+.Toastify__close-button {
+  @apply text-gray-500 hover:text-gray-800 w-8 h-8 opacity-60 hover:opacity-100;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Toastify__close-button:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.15) rotate(90deg);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress Bar - Modern Animasyonlu */
+.Toastify__progress-bar {
+  height: 3px;
+  border-radius: 0 0 24px 24px;
+}
+
+.Toastify__progress-bar--success {
+  background: linear-gradient(90deg, #22c55e, #16a34a, #15803d);
+}
+
+.Toastify__progress-bar--error {
+  background: linear-gradient(90deg, #ef4444, #dc2626, #b91c1c);
+}
+
+.Toastify__progress-bar--warning {
+  background: linear-gradient(90deg, #f97316, #ea580c, #c2410c);
+}
+
+.Toastify__progress-bar--info {
+  background: linear-gradient(90deg, #2563eb, #9333ea, #7c3aed);
+}
+
+.Toastify__progress-bar--default {
+  background: linear-gradient(90deg, #6b7280, #4b5563, #374151);
+}
+
+/* Hover efektleri - Gelişmiş */
+.Toastify__toast:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.12),
+    0 24px 48px -12px rgba(59, 130, 246, 0.08),
+    0 12px 24px -8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Özel Yüküm Yolda Toast Class'ları - Ultra Modern */
+.toast-yukum-yolda {
+  background: linear-gradient(
+      135deg,
+      rgba(239, 246, 255, 0.95) 0%,
+      rgba(219, 234, 254, 0.95) 30%,
+      rgba(243, 232, 255, 0.95) 70%,
+      rgba(250, 245, 255, 0.9) 100%
+    ),
+    linear-gradient(135deg, #eff6ff, #f3e8ff) !important;
+  border: 2px solid transparent !important;
+  background-clip: padding-box !important;
+  position: relative !important;
+}
+
+.toast-yukum-yolda::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #2563eb, #9333ea, #2563eb);
+  background-size: 200% 200%;
+  border-radius: 24px;
+  z-index: -1;
+  margin: -2px;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.toast-success-modern {
+  background: linear-gradient(
+      135deg,
+      rgba(220, 252, 231, 0.95) 0%,
+      rgba(187, 247, 208, 0.9) 100%
+    ),
+    linear-gradient(135deg, #dcfce7, #bbf7d0) !important;
+  border-left: 5px solid #16a34a !important;
+  border-radius: 24px !important;
+}
+
+.toast-error-modern {
+  background: linear-gradient(
+      135deg,
+      rgba(254, 242, 242, 0.95) 0%,
+      rgba(254, 202, 202, 0.9) 100%
+    ),
+    linear-gradient(135deg, #fef2f2, #fecaca) !important;
+  border-left: 5px solid #dc2626 !important;
+  border-radius: 24px !important;
+}
+
+/* Özel ikonlar için - Gelişmiş */
+.toast-with-icon {
+  padding-left: 70px !important;
+  position: relative;
+}
+
+.toast-with-icon::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));
+}
+
+.toast-truck-icon::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m6.75 4.5v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v3.375m6-6V9a2.25 2.25 0 00-2.25-2.25H15A2.25 2.25 0 0012.75 9v2.25m-6.75 0V9a2.25 2.25 0 012.25-2.25h2.25A2.25 2.25 0 0115 9v.75'/%3E%3C/svg%3E");
+}
+
+/* Son Responsive düzenlemeler - Çok daha iyi UX */
+@media (max-width: 640px) {
+  .Toastify__toast-body {
+    @apply px-5 py-4 text-sm;
+    line-height: 1.5;
+  }
+
+  .Toastify__toast-icon {
+    @apply w-6 h-6;
+  }
+
+  .Toastify__close-button {
+    top: 12px;
+    right: 12px;
+    @apply w-7 h-7;
+  }
+
+  .Toastify__toast {
+    min-height: 70px;
+  }
+}
+
+/* Ultra küçük ekranlar için */
+@media (max-width: 360px) {
+  .Toastify__toast-container {
+    right: 8px !important;
+    left: 8px !important;
+    width: calc(100% - 16px) !important;
+  }
+
+  .Toastify__toast-body {
+    @apply px-4 py-3 text-sm;
+  }
+}

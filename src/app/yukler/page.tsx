@@ -16,6 +16,7 @@ import {
   Search,
   Eye,
 } from "lucide-react";
+import Header from "@/components/Header";
 
 const YuklerPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -174,29 +175,10 @@ const YuklerPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
       {/* Header */}
-      <div className="bg-white border-b border-blue-100 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-3">
-                <Truck className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Mevcut Yükler
-                </h1>
-                <p className="text-gray-600">Platformdaki aktif yük ilanları</p>
-              </div>
-            </div>
-            <div className="hidden sm:block">
-              <span className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                ÜCRETSİZ Platform
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Header
+        title={"Mevcut Yükler"}
+        desc={"Platformdaki aktif yük ilanları"}
+      />
 
       {/* Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">

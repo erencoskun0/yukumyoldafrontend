@@ -9,6 +9,7 @@ import {
   Zap,
   Users,
   Eye,
+  User,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -123,13 +124,16 @@ export default function Home() {
 
               <Link
                 href="/kayit-ol"
-                className="w-full p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="w-full p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-left flex items-center justify-between group"
                 onClick={closeMobileMenu}>
-                <div className="text-center">
-                  <div className="font-bold">Ücretsiz Kayıt Ol</div>
-                  <div className="text-sm opacity-90">
+                <div>
+                  <div className="font-bold text-white">Ücretsiz Kayıt Ol</div>
+                  <div className="text-sm text-white/90">
                     Hemen başla • Gizli ücret yok
                   </div>
+                </div>
+                <div className="bg-white/20 rounded-full p-2">
+                  <User className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
                 </div>
               </Link>
 

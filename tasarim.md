@@ -167,6 +167,128 @@
 }
 ```
 
+### 🍞 Toast Bildirimleri
+
+#### Ana Toast Stilleri
+
+```css
+/* Başarı Toast'u */
+.toast-success {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #166534;
+}
+
+/* Hata Toast'u */
+.toast-error {
+  background: linear-gradient(135deg, #fef2f2 0%, #fecaca 50%, #fca5a5 100%);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #991b1b;
+}
+
+/* Uyarı Toast'u */
+.toast-warning {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%);
+  border: 1px solid rgba(234, 88, 12, 0.2);
+  color: #9a3412;
+}
+
+/* Bilgi Toast'u (Marka Renkleri) */
+.toast-info {
+  background: linear-gradient(
+    135deg,
+    #eff6ff 0%,
+    #dbeafe 30%,
+    #f3e8ff 70%,
+    #faf5ff 100%
+  );
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: #1e40af;
+}
+```
+
+#### Özel Toast Varyantları
+
+```css
+/* Yüküm Yolda Markalı Toast */
+.toast-yukum-yolda {
+  background: linear-gradient(
+    135deg,
+    #eff6ff 0%,
+    #dbeafe 30%,
+    #f3e8ff 70%,
+    #faf5ff 100%
+  );
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.toast-yukum-yolda::before {
+  content: "";
+  background: linear-gradient(135deg, #2563eb, #9333ea);
+  border-radius: 16px;
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+}
+
+/* Modern Başarı Toast'u */
+.toast-success-modern {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-left: 4px solid #16a34a;
+}
+
+/* Modern Hata Toast'u */
+.toast-error-modern {
+  background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+  border-left: 4px solid #dc2626;
+}
+```
+
+#### Toast Özellikleri
+
+- **Boyut**: Minimum 70px yükseklik, maksimum 420px genişlik
+- **Border Radius**: 16px (rounded-2xl)
+- **Animasyon**: 0.3s ease geçiş efektleri
+- **Gölge**: Çok katmanlı gölge efekti
+- **Backdrop**: Blur efekti
+- **Hover**: Hafif büyüme (scale: 1.02)
+
+#### Toast Kullanım Örnekleri
+
+```javascript
+// Başarı bildirimi
+toast.success("İşlem başarıyla tamamlandı!", {
+  className: "toast-success-modern",
+  autoClose: 3000,
+});
+
+// Hata bildirimi
+toast.error("Bir hata oluştu!", {
+  className: "toast-error-modern",
+  autoClose: 5000,
+});
+
+// Marka bildirimi
+toast.info("Yüküm Yolda'ya hoş geldiniz!", {
+  className: "toast-yukum-yolda",
+  autoClose: 4000,
+});
+
+// Özel bildirim
+toast("🚚 Yeni yük ilanı bulundu!", {
+  className: "toast-with-icon toast-truck-icon",
+  autoClose: 6000,
+});
+```
+
+#### Responsive Davranış
+
+- **Desktop**: Sağ üst köşede gösterilir
+- **Mobil**: Tam genişlik, üstten aşağı animasyon
+- **Boyut**: Mobilde otomatik uyum
+- **Limit**: Aynı anda maksimum 5 toast
+
 ## 🎭 İkonlar ve Semboller
 
 ### Ana İkonlar

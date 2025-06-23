@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Truck,
   User,
@@ -12,6 +12,11 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store/store";
+import { useRouter } from "next/navigation";
+import { userLogin, userRegister } from "@/redux/slices/authSlice";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -26,28 +31,111 @@ const RegisterPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useRouter();
+  const { role } = useSelector((state: RootState) => state.authUser);
+
+  useEffect(() => {
+    if (role == "VehicleOwner" || role == "Pre-VehicleOwner") {
+      navigate.push("/yukler");
+    } else if (role == "Pre-Loader" || role == "Loader") {
+      navigate.push("/araclar");
+    }
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+
+    if (name === "phoneNumber") {
+      if (value.length === 11) {
+        value = value.slice(1);
+      }
+    }
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    // Form submission logic burada olacak
+
+    const result = await dispatch(
+      userRegister({
+        email: formData.email,
+        password: formData.password,
+        phoneNumber: "+90" + formData.phoneNumber,
+        name: formData.name,
+        surName: formData.surName,
+        roleId: formData.roleId,
+        confirmPassword: formData.confirmPassword,
+      })
+    );
+    if (result?.payload?.message == "Kullanıcı başarıyla kaydedildi.") {
+      await dispatch(
+        userLogin({
+          email: formData.email,
+          password: formData.password,
+          phoneNumber: "+90" + formData.phoneNumber,
+        })
+      );
+      if (role == "VehicleOwner" || role == "Pre-VehicleOwner") {
+        navigate.push("/yukler");
+      } else if (role == "Pre-Loader" || role == "Loader") {
+        navigate.push("/araclar");
+      }
+    }
   };
 
   const roleOptions = [
-    { value: "nakliyeci", label: "Nakliyeci" },
-    { value: "arac-soforu", label: "Araç Sahibi" },
+    { value: "6E512F38-172B-4C77-9425-49F953DF68EF", label: "Nakliyeci" },
+    { value: "FDC4AD93-AD56-4D83-8C6F-6345AC8DF9B5", label: "Araç Sahibi" },
   ];
 
+  if (role != null) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 flex items-center justify-center">
+        <div className="bg-white rounded-3xl shadow-2xl p-12 max-w-md w-full mx-4 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-4 animate-pulse">
+              <Truck className="h-10 w-10 text-white" />
+            </div>
+          </div>
+
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
+            Yüküm Yolda
+          </h1>
+
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-gray-200 rounded-full animate-spin border-t-blue-600"></div>
+              <div className="absolute inset-0 w-16 h-16 border-4 border-transparent rounded-full animate-ping border-t-purple-400"></div>
+            </div>
+          </div>
+
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            Yönlendiriliyor...
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Hesabınız doğrulandı, ana sayfaya yönlendiriliyorsunuz
+          </p>
+
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
+            <div
+              className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full animate-pulse"
+              style={{ width: "100%" }}></div>
+          </div>
+
+          <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span>Güvenli bağlantı kuruldu</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto">
@@ -91,7 +179,7 @@ const RegisterPage = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+                    className="block w-full pl-10 pr-3 py-3 border text-gray-500 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
                     placeholder="Adınız"
                     required
                   />
@@ -114,7 +202,7 @@ const RegisterPage = () => {
                     name="surName"
                     value={formData.surName}
                     onChange={handleInputChange}
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+                    className="block w-full pl-10 pr-3 py-3 border text-gray-500 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
                     placeholder="Soyadınız"
                     required
                   />
@@ -142,7 +230,7 @@ const RegisterPage = () => {
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
-                  className="block w-full pl-20 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+                  className="block w-full pl-[88px] pr-3 py-3 border text-gray-500 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
                   placeholder="5XX XXX XX XX"
                   required
                 />
@@ -166,7 +254,7 @@ const RegisterPage = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+                  className="block w-full pl-10 pr-3 py-3 border text-gray-500 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
                   placeholder="ornek@email.com"
                   required
                 />
@@ -189,7 +277,7 @@ const RegisterPage = () => {
                   name="roleId"
                   value={formData.roleId}
                   onChange={handleInputChange}
-                  className="block w-full text-gray-500 pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 bg-white appearance-none cursor-pointer"
+                  className="block w-full text-gray-500 pl-10  pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 bg-white appearance-none cursor-pointer"
                   required>
                   <option disabled>Kullanıcı Tipi Seçiniz</option>
                   {roleOptions.map((option) => (
@@ -230,7 +318,7 @@ const RegisterPage = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+                  className="block w-full pl-10 pr-12 py-3 text-gray-500 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
                   placeholder="Güçlü bir şifre oluşturun"
                   required
                 />
@@ -264,7 +352,7 @@ const RegisterPage = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
+                  className="block w-full pl-10 pr-12 py-3 text-gray-500 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 placeholder-gray-400"
                   placeholder="Şifrenizi tekrar girin"
                   required
                 />
@@ -293,7 +381,7 @@ const RegisterPage = () => {
               <p className="text-gray-600">
                 Zaten hesabınız var mı?{" "}
                 <Link
-                  href="/login"
+                  href="/giris-yap"
                   className="text-blue-600 hover:text-purple-600 font-semibold hover:underline transition-colors duration-300">
                   Giriş Yapın
                 </Link>
@@ -306,13 +394,17 @@ const RegisterPage = () => {
         <div className="text-center mt-8">
           <p className="text-sm text-gray-500">
             Hesap oluşturarak{" "}
-            <span className="text-blue-600 hover:underline cursor-pointer">
+            <Link
+              href={"/kullanim-sartlari"}
+              className="text-blue-600 hover:underline cursor-pointer">
               Kullanım Şartları
-            </span>{" "}
+            </Link>{" "}
             ve{" "}
-            <span className="text-blue-600 hover:underline cursor-pointer">
+            <Link
+              href={"/kullanim-sartlari"}
+              className="text-blue-600 hover:underline cursor-pointer">
               Gizlilik Politikası
-            </span>
+            </Link>
             nı kabul etmiş olursunuz.
           </p>
         </div>
