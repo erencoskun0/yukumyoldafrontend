@@ -62,15 +62,15 @@ export default function AracDetay({ params }: { params: { id: string } }) {
                   </p>
                 </div>
                 <div className="flex flex-col items-center space-y-4">
-                  <TurkishPlate plate={aracDetay.Plate} />
-                  {aracDetay.TrailerPlate && (
+                  {/* <TurkishPlate plate={aracDetay.Plate} /> */}
+                  {/* {aracDetay.TrailerPlate && (
                     <div className="text-center">
                       <div className="text-white text-sm mb-2">
                         Römork Plakası
                       </div>
                       <TurkishPlate plate={aracDetay.TrailerPlate} />
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>

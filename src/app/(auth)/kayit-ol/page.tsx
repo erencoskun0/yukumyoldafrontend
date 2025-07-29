@@ -41,7 +41,7 @@ const RegisterPage = () => {
     } else if (role == "Pre-Loader" || role == "Loader") {
       navigate.push("/araclar");
     }
-  }, []);
+  }, [role]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

@@ -12,6 +12,8 @@ type initialAuthTypes = {
   role: string | null;
   name?: string | null;
   surName?: string | null;
+  phone?: string | null;
+  email?: string | null;
 };
 
 const token =
@@ -32,6 +34,10 @@ const initialState: initialAuthTypes = {
   name: token?.split(".").length === 3 ? jwtDecode<any>(token)?.name : null,
   surName:
     token?.split(".").length === 3 ? jwtDecode<any>(token)?.surname : null,
+
+  phone:
+    token?.split(".").length === 3 ? jwtDecode<any>(token)?.phoneNumber : null,
+  email: token?.split(".").length === 3 ? jwtDecode<any>(token)?.email : null,
 };
 
 export const userLogin = createAsyncThunk(
@@ -58,23 +64,26 @@ export const userLogin = createAsyncThunk(
 
 export const userRegister = createAsyncThunk(
   "userRegister",
-  async ({
-    name,
-    surName,
-    email,
-    password,
-    confirmPassword,
-    phoneNumber,
-    roleId,
-  }: {
-    name: string;
-    surName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    phoneNumber: string;
-    roleId: string;
-  }) => {
+  async (
+    {
+      name,
+      surName,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber,
+      roleId,
+    }: {
+      name: string;
+      surName: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+      phoneNumber: string;
+      roleId: string;
+    },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await customRequest.post(`/api/Auth/Register`, {
         name,
@@ -86,7 +95,9 @@ export const userRegister = createAsyncThunk(
         confirmPassword,
       });
       return response.data;
-    } catch (error) {}
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
+    }
   }
 );
 
@@ -131,6 +142,8 @@ export const authSlice = createSlice({
         const decodedToken = jwtDecode<any>(action.payload?.token);
         state.userId = decodedToken?.userId;
         state.role = decodedToken?.role;
+        state.name = decodedToken?.name;
+        state.surName = decodedToken?.surname;
         toast.success("Giriş Yapılıyor", {
           className: "toast-success-modern",
           autoClose: 2000,
@@ -176,21 +189,13 @@ export const authSlice = createSlice({
           pauseOnHover: true,
           draggable: true,
         });
-      } else {
-        toast.error("Kayıt Oluşturulamadı Bilgileri Eksiksiz Giriniz!", {
-          className: "toast-error-modern",
-          autoClose: 6000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
       }
     });
-    builder.addCase(userRegister.rejected, (state) => {
+    builder.addCase(userRegister.rejected, (state, action: any) => {
       state.isAuthenticated = false;
       state.loading = false;
-      toast.error("Kayıt işlemi başarısız! Bağlantınızı kontrol edin.", {
+      console.log("asd", action.payload);
+      toast.error(action.payload?.errors[0], {
         className: "toast-error-modern",
         autoClose: 4000,
         hideProgressBar: false,
