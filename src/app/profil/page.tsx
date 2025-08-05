@@ -1,6 +1,6 @@
 "use client";
-import LoaderProfile from "@/pages/LoaderProfile";
-import VehicleOwnerProfile from "@/pages/VehicleOwnerProfile";
+import LoaderProfile from "@/myPages/LoaderProfile";
+import VehicleOwnerProfile from "@/myPages/VehicleOwnerProfile";
 import { RootState } from "@/redux/store/store";
 import { formatTurkishPhoneNumber } from "@/utils/phoneNumberFormatter";
 import {
