@@ -1,5 +1,8 @@
 "use client";
 
+import { setUser } from "@/redux/slices/authSlice";
+import { AppDispatch } from "@/redux/store/store";
+import { jwtDecode } from "jwt-decode";
 import {
   Truck,
   Shield,
@@ -12,11 +15,11 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };

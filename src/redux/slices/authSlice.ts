@@ -16,28 +16,16 @@ type initialAuthTypes = {
   email?: string | null;
 };
 
-const token =
-  typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-
 const initialState: initialAuthTypes = {
   loading: false,
-  isAuthenticated:
-    token && token.split(".").length === 3 && jwtDecode<any>(token)?.userId
-      ? true
-      : false,
-  userId:
-    token && token.split(".").length === 3
-      ? jwtDecode<any>(token)?.userId
-      : null,
-  role:
-    token && token.split(".").length === 3 ? jwtDecode<any>(token)?.role : null,
-  name: token?.split(".").length === 3 ? jwtDecode<any>(token)?.name : null,
-  surName:
-    token?.split(".").length === 3 ? jwtDecode<any>(token)?.surname : null,
+  isAuthenticated: false,
+  userId: null,
+  role: null,
+  name: null,
+  surName: null,
 
-  phone:
-    token?.split(".").length === 3 ? jwtDecode<any>(token)?.phoneNumber : null,
-  email: token?.split(".").length === 3 ? jwtDecode<any>(token)?.email : null,
+  phone: null,
+  email: null,
 };
 
 export const userLogin = createAsyncThunk(
@@ -128,6 +116,16 @@ export const authSlice = createSlice({
         draggable: true,
       });
     },
+    setUser: (state, action) => {
+      const user = action.payload;
+      state.isAuthenticated = !!user?.userId;
+      state.userId = user?.userId || null;
+      state.role = user?.role || null;
+      state.name = user?.name || null;
+      state.surName = user?.surname || null;
+      state.phone = user?.phoneNumber || null;
+      state.email = user?.email || null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.pending, (state) => {
@@ -144,6 +142,8 @@ export const authSlice = createSlice({
         state.role = decodedToken?.role;
         state.name = decodedToken?.name;
         state.surName = decodedToken?.surname;
+        state.phone = decodedToken?.phoneNumber;
+        state.email = decodedToken?.email;
         toast.success("Giriş Yapılıyor", {
           className: "toast-success-modern",
           autoClose: 2000,
@@ -207,5 +207,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setUser } = authSlice.actions;
 export default authSlice.reducer;

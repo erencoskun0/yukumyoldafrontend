@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Truck, Loader2, Sparkles } from "lucide-react";
 

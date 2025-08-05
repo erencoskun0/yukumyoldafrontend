@@ -40,3 +40,21 @@ export const createLoad = async (formdata: any, userId: any) => {
     return res.data;
   } catch (err: any) {}
 };
+export const updateLoad = async (formdata: any, userId: any, id: any) => {
+  try {
+    const res = await customRequest.put(`/api/Loads/UpdateLoad`, {
+      id: id,
+      userId: userId,
+      description: formdata.description,
+      loadTime: formdata.loadTime,
+      departurevId: formdata.departurevId,
+      destinationProvinceId: formdata.destinationProvinceId,
+      loadStatusId: formdata.loadStatusId,
+      vehicleTypeId: formdata.vehicleTypeId,
+      vehicleBodyId: formdata.vehicleBodyId,
+      weight: formdata.weight,
+      length: formdata.length,
+    });
+    return res.data;
+  } catch (err: any) {}
+};

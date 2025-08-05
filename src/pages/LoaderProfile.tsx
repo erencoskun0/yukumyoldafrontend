@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 const LoaderProfile = () => {
   const { userId } = useSelector((state: RootState) => state.authUser);
   const [isCreateModal, setIsCreateModal] = useState(false);
+  const [selectedLoad, setSelectedLoad] = useState(null);
   const {
     data: allLoadsUserIdData,
     isLoading,
@@ -59,11 +60,15 @@ const LoaderProfile = () => {
         </button>
         <CreateLoadModal
           vehicleTypesData={vehicleTypesData}
+          load={selectedLoad}
           vehicleBodiesData={vehicleBodiesData}
           allProvinceData={allProvinceData}
           refetchLoads={refetchLoads}
-          isOpen={isCreateModal}
-          onClose={() => setIsCreateModal(false)}
+          isOpen={isCreateModal || selectedLoad}
+          onClose={() => {
+            setIsCreateModal(false);
+            setSelectedLoad(null);
+          }}
         />
         <p className="text-xl text-center w-full font-semibold text-gray-800 border-b border-gray-300 pb-3">
           Mevcut Yüklerim
@@ -72,6 +77,7 @@ const LoaderProfile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {allLoadsUserIdData?.map((yuk: any) => (
               <LoadItemProfil
+                setSelectedLoad={setSelectedLoad}
                 refetchLoads={refetchLoads}
                 yuk={yuk}
                 key={yuk.id}

@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import { logout } from "@/redux/slices/authSlice";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  
   const [queryClient] = useState(
     () =>
       new QueryClient({

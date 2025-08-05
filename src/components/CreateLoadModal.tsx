@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Package,
   MapPin,
@@ -9,9 +10,10 @@ import {
   CirclePlus,
   Clock,
   FileText,
+  CircleFadingArrowUp,
 } from "lucide-react";
 import CustomModal from "./CustomModal";
-import { createLoad } from "@/services/apiLoads";
+import { createLoad, updateLoad } from "@/services/apiLoads";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
@@ -24,8 +26,10 @@ const CreateLoadModal = ({
   vehicleBodiesData,
   allProvinceData,
   refetchLoads,
+  load,
 }: any) => {
   const userId = useSelector((state: RootState) => state.authUser.userId);
+  console.log(load, "load");
   const [formData, setFormData] = useState({
     description: "",
     loadTime: "",
@@ -37,6 +41,21 @@ const CreateLoadModal = ({
     weight: null,
     length: null,
   });
+  useEffect(() => {
+    if (load) {
+      setFormData({
+        description: load.description || "",
+        loadTime: load.loadTime || "",
+        departurevId: load.departurevId || "",
+        destinationProvinceId: load.destinationProvinceId || "",
+        loadStatusId: load.loadStatusId || "1",
+        vehicleTypeId: load.vehicleTypeId || "",
+        vehicleBodyId: load.vehicleBodyId || "",
+        weight: load.weight ?? null,
+        length: load.length ?? null,
+      });
+    }
+  }, [load]);
   const { mutate: CreateLoadMutate, isPending } = useMutation({
     mutationFn: () => createLoad(formData, userId),
     mutationKey: ["createLoad"],
@@ -65,6 +84,36 @@ const CreateLoadModal = ({
     },
     onError: (error) => {
       console.error("Yük oluşturulurken hata oluştu:", error);
+    },
+  });
+  const { mutate: UpdateLoadMutate, isPending: isPendingUpdate } = useMutation({
+    mutationFn: () => updateLoad(formData, userId, load?.id),
+    mutationKey: ["updateLoad"],
+    onSuccess: () => {
+      toast.success("Yük Güncellendi.", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      refetchLoads();
+      onClose();
+      setFormData({
+        description: "",
+        loadTime: "",
+        departurevId: "",
+        destinationProvinceId: "",
+        loadStatusId: "1",
+        vehicleTypeId: "",
+        vehicleBodyId: "",
+        weight: null,
+        length: null,
+      });
+    },
+    onError: (error) => {
+      console.error("Yük güncellenirken hata oluştu:", error);
     },
   });
   const [focusedField, setFocusedField] = useState("");
@@ -127,8 +176,11 @@ const CreateLoadModal = ({
       toast.error("Lütfen araç tipi ve kasa tipini seçiniz.");
       return;
     }
-
-    CreateLoadMutate();
+    if (load) {
+      UpdateLoadMutate();
+    } else {
+      CreateLoadMutate();
+    }
   };
   const getMinDateTime = () => {
     const now = new Date();
@@ -142,6 +194,7 @@ const CreateLoadModal = ({
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
+
   return (
     <CustomModal
       isOpen={isOpen}
@@ -421,22 +474,30 @@ const CreateLoadModal = ({
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               onClick={handleSubmit}
               disabled={isPending}
               type="button"
               className="group w-full relative bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
               <div className="flex items-center justify-center">
-                {isPending ? (
+                {isPending || isPendingUpdate ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
-                    Oluşturuluyor...
+                    {isPending ? "Oluşturuluyor..." : "Güncelleniyor..."}
                   </>
                 ) : (
                   <>
-                    <CirclePlus className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-                    Yük Oluştur
+                    {load ? (
+                      <>
+                        <CircleFadingArrowUp className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+                        Yükü Güncelle
+                      </>
+                    ) : (
+                      <>
+                        <CirclePlus className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+                        Yük Oluştur
+                      </>
+                    )}
                   </>
                 )}
               </div>

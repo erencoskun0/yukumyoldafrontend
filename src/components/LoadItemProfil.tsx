@@ -1,3 +1,4 @@
+"use client";
 import { formatTurkishPhoneNumber } from "@/utils/phoneNumberFormatter";
 import {
   Calendar,
@@ -21,8 +22,9 @@ import { RootState } from "@/redux/store/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import LoadingComponent from "./LoadingComponent";
-const LoadItemProfil = ({ yuk, refetchLoads }: any) => {
+const LoadItemProfil = ({ yuk, refetchLoads, setSelectedLoad }: any) => {
   const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [isUpdateModal, setIsUpdateModal] = useState(false);
   const { userId } = useSelector((state: RootState) => state.authUser);
   const { mutate: DeleteLoad, isPending } = useMutation({
     mutationFn: ({
@@ -58,6 +60,7 @@ const LoadItemProfil = ({ yuk, refetchLoads }: any) => {
   if (isPending) {
     return <LoadingComponent type="minimal" />;
   }
+  
   return (
     <>
       <CustomAlertModal
@@ -126,7 +129,7 @@ const LoadItemProfil = ({ yuk, refetchLoads }: any) => {
               Açıklama:
             </p>
             <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
-              {yuk.description}
+              {yuk?.description}
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -201,7 +204,12 @@ const LoadItemProfil = ({ yuk, refetchLoads }: any) => {
               <Trash2 className="h-4 w-4" />
               <span>Sil</span>
             </button>
-            <button className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
+            <button
+              onClick={() => {
+                setIsUpdateModal(true);
+                setSelectedLoad(yuk);
+              }}
+              className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2">
               <Edit3 className="h-4 w-4" />
               <span>Güncelle</span>
             </button>
