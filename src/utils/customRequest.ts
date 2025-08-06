@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-
-// Token interface'leri
+ 
 interface TokenResponse {
   token: string;
   refreshToken: string;
@@ -10,10 +9,9 @@ interface RefreshTokenRequest {
   accessToken: string;
   refreshToken: string;
 }
-
-// Axios instance oluşturma
+ 
 export const customRequest = axios.create({
-  baseURL: "https://localhost:6500",
+  baseURL: "https://api.yukumyolda.com",
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
@@ -76,7 +74,7 @@ const refreshToken = async (): Promise<string> => {
 
   try {
     const response = await axios.post<TokenResponse>(
-      "https://localhost:6500/api/Auth/RefreshToken",
+      "https://api.yukumyolda.com/api/Auth/RefreshToken",
       {
         accessToken,
         refreshToken: currentRefreshToken,
