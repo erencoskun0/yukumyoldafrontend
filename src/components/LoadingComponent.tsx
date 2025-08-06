@@ -100,7 +100,7 @@ const MinimalLoading = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-purple-600 rounded-full animate-pulse opacity-20"></div>
         </div>
 
-        <p className="text-gray-600 font-medium">Loading...</p>
+        <p className="text-gray-600 font-medium">Yükleniyor...</p>
       </div>
     </div>
   );

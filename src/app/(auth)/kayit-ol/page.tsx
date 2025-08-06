@@ -33,7 +33,7 @@ const RegisterPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useRouter();
-  const { role } = useSelector((state: RootState) => state.authUser);
+  const { role, loading } = useSelector((state: RootState) => state.authUser);
 
   useEffect(() => {
     if (role == "VehicleOwner" || role == "Pre-VehicleOwner") {
@@ -58,6 +58,10 @@ const RegisterPage = () => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    console.log("Form Data Updated:", formData);
+  }, [formData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +94,7 @@ const RegisterPage = () => {
   };
 
   const roleOptions = [
-    { value: "6E512F38-172B-4C77-9425-49F953DF68EF", label: "Nakliyeci" },
+    { value: "6E512F38-172B-4C77-9425-49F953DF68EF", label: "Yük Sahibi" },
     { value: "FDC4AD93-AD56-4D83-8C6F-6345AC8DF9B5", label: "Araç Sahibi" },
   ];
 
@@ -279,7 +283,9 @@ const RegisterPage = () => {
                   onChange={handleInputChange}
                   className="block w-full text-gray-500 pl-10  pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300 bg-white appearance-none cursor-pointer"
                   required>
-                  <option disabled>Kullanıcı Tipi Seçiniz</option>
+                  <option value="" disabled>
+                    Kullanıcı Tipi Seçiniz
+                  </option>
                   {roleOptions.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
@@ -369,11 +375,10 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300">
-              Hesap Oluştur
+              {loading ? "Hesap Oluşturuluyor.." : "Hesap Oluştur"}
             </button>
 
             {/* Login Link */}

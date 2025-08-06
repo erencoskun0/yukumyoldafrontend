@@ -108,7 +108,6 @@ export const authSlice = createSlice({
       state.surName = null;
       // Toast mesajı göster
       toast.info("Çıkış yapıldı", {
-        className: "toast-info-modern",
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -145,7 +144,6 @@ export const authSlice = createSlice({
         state.phone = decodedToken?.phoneNumber;
         state.email = decodedToken?.email;
         toast.success("Giriş Yapılıyor", {
-          className: "toast-success-modern",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -154,7 +152,6 @@ export const authSlice = createSlice({
         });
       } else {
         toast.error("Kullanıcı Bilgileri Hatalı!", {
-          className: "toast-error-modern",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -167,7 +164,6 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
       toast.error("🔐 Giriş işlemi başarısız! Bağlantınızı kontrol edin.", {
-        className: "toast-error-modern",
         autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -182,7 +178,6 @@ export const authSlice = createSlice({
       state.loading = false;
       if (action.payload?.message == "Kullanıcı başarıyla kaydedildi.") {
         toast.success(action.payload?.message, {
-          className: "toast-success-modern",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -196,7 +191,6 @@ export const authSlice = createSlice({
       state.loading = false;
       console.log("asd", action.payload);
       toast.error(action.payload?.errors[0], {
-        className: "toast-error-modern",
         autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,

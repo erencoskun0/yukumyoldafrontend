@@ -128,7 +128,9 @@ const AraclarPage = () => {
 
   return (
     <>
-      <div className="relative z-40">{isLoading && <LoadingComponent type="minimal" />}</div>
+      <div className="relative z-40">
+        {isLoading && <LoadingComponent type="minimal" />}
+      </div>
 
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50">
         {/* Header */}
@@ -355,15 +357,17 @@ const AraclarPage = () => {
                   </div>
 
                   {/* Description */}
-                  <div className="bg-gray-50 rounded-xl p-3">
-                    <p className="text-sm text-gray-600 font-semibold   mb-2 pb-1 border-b border-gray-300">
+                  {arac.description && (
+                    <div className="bg-gray-50 rounded-xl p-3">
+                      {/* <p className="text-sm text-gray-600 font-semibold   mb-2 pb-1 border-b border-gray-300">
                       {" "}
                       Açıklama:
-                    </p>
-                    <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
-                      {arac.description}
-                    </p>
-                  </div>
+                    </p> */}
+                      <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
+                        {arac.description}
+                      </p>
+                    </div>
+                  )}
 
                   {/* Dimensions */}
                   <div className="grid grid-cols-3 gap-3">
@@ -409,14 +413,14 @@ const AraclarPage = () => {
 
                   {/* Contact Info */}
                   <div className="space-y-2 pt-4 border-t border-gray-100">
-                    <div className="flex items-center space-x-2">
+                    {/* <div className="flex items-center space-x-2">
                       <Mail className="h-4 w-4 text-gray-500" />
                       <a
                         href={`mailto:${arac.email}`}
                         className="text-sm text-gray-700">
                         {arac.email}
                       </a>
-                    </div>
+                    </div> */}
                     <div className="flex items-center space-x-2">
                       <Phone className="h-4 w-4 text-gray-500" />
                       <a
